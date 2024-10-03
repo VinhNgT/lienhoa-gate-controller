@@ -1,0 +1,95 @@
+{
+  // Place your driving_license workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"scope": "javascript,typescript",
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+
+  "Debug Print": {
+    "scope": "dart",
+    "prefix": "dp",
+    // prettier-ignore
+    "body": [
+      "debugPrint('$0');",
+    ],
+    "description": "Log output to console"
+  },
+
+  "Gap": {
+    "scope": "dart",
+    "prefix": "gap",
+    // prettier-ignore
+    "body": [
+      "Gap($0),"
+    ],
+    "description": "Add a gap"
+  },
+
+  "Dart Mappable": {
+    "scope": "dart",
+    "prefix": "map",
+    "body": [
+      "import 'package:dart_mappable/dart_mappable.dart';\r\n\r\npart '$TM_FILENAME_BASE.mapper.dart';\r\n\r\n@MappableClass()\r\nclass ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g} with ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g}Mappable {\r\n  $0\r\n\r\n  const ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g}();\r\n}"
+    ],
+    "description": "Create a Dart Mappable class"
+  },
+
+  "Mappable Part": {
+    "scope": "dart",
+    "prefix": "mappart",
+    "body": ["part '$TM_FILENAME_BASE.mapper.dart';"],
+    "description": "Insert a Mappable part"
+  },
+
+  "Mappable Realm Object ": {
+    "scope": "dart",
+    "prefix": "maprealm",
+    "body": [
+      "@MappableClass()\r\nclass ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g} extends ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g}Realm with ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g}Mappable {\r\n  ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g}({\r\n    ObjectId? realmObjId,\r\n\r\n$0\r\n  }) : super(realmObjId: realmObjId ?? ObjectId());\r\n}"
+    ],
+    "description": "Create a Mappable Realm Object"
+  },
+
+  "Realm Import": {
+    "scope": "dart",
+    "prefix": "realmimport",
+    "body": ["import 'package:realm/realm.dart';"],
+    "description": "Insert a Realm import"
+  },
+
+  "Realm Part": {
+    "scope": "dart",
+    "prefix": "realmpart",
+    "body": ["part '$TM_FILENAME_BASE.realm.dart';"],
+    "description": "Insert a Realm part"
+  },
+
+  "Realm Object": {
+    "scope": "dart",
+    "prefix": "realmobj",
+    "body": [
+      "import 'package:realm/realm.dart';\r\n\r\npart '$TM_FILENAME_BASE.realm.dart';\r\n\r\n@realm\r\nclass $${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g}Realm {\r\n  @PrimaryKey()\r\n  late ObjectId realmObjId;\r\n\r\n  $0\r\n}"
+    ],
+    "description": "Create a Realm Object"
+  }
+
+  // "Entity Dart Mappable Class": {
+  //   "scope": "dart",
+  //   "prefix": "emclass",
+  //   "body": [
+  //     "import 'package:dart_mappable/dart_mappable.dart';\r\nimport 'package:dio_cache_interceptor_objectbox_store/objectbox.g.dart';\r\n\r\npart '$TM_FILENAME_BASE.mapper.dart';\r\n\r\n@Entity()\r\n@MappableClass()\r\nclass ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g} with ${TM_FILENAME_BASE/(^|_)([a-z])/${2:/capitalize}/g}Mappable {\r\n  @Id()\r\n  int id = 0;\r\n\r\n  $0\r\n}\r\n"
+  //   ],
+  //   "description": "Create an ObjectBox Entity Dart Mappable class"
+  // }
+}

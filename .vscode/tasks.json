@@ -1,0 +1,43 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build_runner_watch",
+      "type": "shell",
+      "command": "dart",
+      "args": ["run", "build_runner", "watch", "--delete-conflicting-outputs"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "icon": {
+        "color": "terminal.ansiBlue",
+        "id": "eye-watch"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "runOptions": {
+        "instanceLimit": 1
+      },
+      "problemMatcher": {
+        "base": "$dart-build_runner",
+        "pattern": {
+          "regexp": "^\\[(WARNING)\\] (.*)",
+          "severity": 1,
+          "message": 2,
+          "file": 0
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^(\\[INFO\\] Starting Build|\\[INFO\\] Generating build)",
+          "endsPattern": "^(\\[INFO\\] Succeeded|\\[SEVERE\\] Failed|\\[INFO\\] Builds finished)"
+        }
+      }
+    }
+  ]
+}
