@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
-class AppControlScreen extends HookConsumerWidget {
-  const AppControlScreen({super.key});
+class SettingsScreen extends HookConsumerWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

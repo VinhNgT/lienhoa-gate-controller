@@ -20,7 +20,7 @@ class AppRouter extends $AppRouter {
               initial: true,
             ),
             AutoRoute(
-              page: AppControlRoute.page,
+              page: SettingsRoute.page,
             ),
           ],
         ),
