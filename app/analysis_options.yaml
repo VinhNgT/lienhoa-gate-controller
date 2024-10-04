@@ -9,6 +9,15 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  plugins:
+    - custom_lint
+
+  exclude:
+    - "**.freezed.dart"
+    - "**.g.dart"
+    - "**.gr.dart"
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -24,5 +33,45 @@ linter:
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
+    # Coding Rules
+    - unawaited_futures
+    # - discarded_futures
+    - unnecessary_await_in_return
+    - unnecessary_breaks
+    - unnecessary_lambdas
+    - unnecessary_statements
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - type_annotate_public_apis
+    - require_trailing_commas
+    - always_put_control_body_on_new_line
+    - avoid_final_parameters
+    - parameter_assignments
+    - unnecessary_parenthesis
+    - only_throw_errors
+    - avoid_returning_this
+    - lines_longer_than_80_chars
+
+    # Class Rules
+    - use_super_parameters
+    - use_enums
+    - use_setters_to_change_properties
+    # - sort_constructors_first
+    - sort_unnamed_constructors_first
+    # - prefer_constructors_over_static_methods
+
+    # Import Rules
+    - directives_ordering
+    - always_use_package_imports
+    - use_string_in_part_of_directives
+
+    # String Rules
+    - use_string_buffers
+    - prefer_single_quotes
+    - missing_whitespace_between_adjacent_strings
+    - no_adjacent_strings_in_list
+    - leading_newlines_in_multiline_strings
+
+    # Dummy prettier spacer
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

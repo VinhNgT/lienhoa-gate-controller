@@ -1,0 +1,26 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        generate_for:
+          include:
+            - "lib/**/domain/**.dart"
+
+      json_serializable:
+        options:
+          explicit_to_json: true
+
+      riverpod_generator:
+        generate_for:
+          include:
+            - "lib/**/**_repository.dart"
+            - "lib/**/**_service.dart"
+            - "lib/**/**_provider.dart"
+            - "lib/**/**_providers.dart"
+            - "lib/**/**_controller.dart"
+
+      auto_route_generator:
+        generate_for:
+          include:
+            - "lib/routing/**.dart"
+            - "lib/**/presentation/**.dart"
