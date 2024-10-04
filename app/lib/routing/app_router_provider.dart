@@ -14,6 +14,15 @@ class AppRouter extends $AppRouter {
         AutoRoute(
           page: HomeRoute.page,
           initial: true,
+          children: [
+            AutoRoute(
+              page: LogViewRoute.page,
+              initial: true,
+            ),
+            AutoRoute(
+              page: AppControlRoute.page,
+            ),
+          ],
         ),
       ];
 

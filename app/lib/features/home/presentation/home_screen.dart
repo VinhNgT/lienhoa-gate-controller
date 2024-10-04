@@ -25,10 +25,7 @@ class HomeScreen extends HookConsumerWidget {
           children: [
             const CameraView().inGridArea('camera'),
             const CameraView().inGridArea('camshoot'),
-            // const SizedBox().inGridArea('camshoot'),
-            const Center(
-              child: Text('Hello World!'),
-            ).inGridArea('control'),
+            const AutoRouter().inGridArea('control'),
           ],
         ),
       ),
