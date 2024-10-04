@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lienhoa_gate_controller/features/camera/presentation/camera_view.dart';
 
 @RoutePage()
-class ControlCenter extends HookConsumerWidget {
-  const ControlCenter({super.key});
+class HomeScreen extends HookConsumerWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
