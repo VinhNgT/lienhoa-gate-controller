@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lienhoa_gate_controller/features/control_center/presentation/camera/camera_live_screen.dart';
+import 'package:lienhoa_gate_controller/features/camera/presentation/camera_view.dart';
 
 @RoutePage()
 class ControlCenter extends HookConsumerWidget {
@@ -23,8 +23,8 @@ class ControlCenter extends HookConsumerWidget {
             1.fr,
           ],
           children: [
-            const CameraLiveScreen().inGridArea('camera'),
-            const CameraLiveScreen().inGridArea('camshoot'),
+            const CameraView().inGridArea('camera'),
+            const CameraView().inGridArea('camshoot'),
             // const SizedBox().inGridArea('camshoot'),
             const Center(
               child: Text('Hello World!'),
