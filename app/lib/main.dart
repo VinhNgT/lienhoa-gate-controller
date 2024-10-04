@@ -17,7 +17,6 @@ void main() async {
 
   await windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
-    // await windowManager.focus();
   });
 
   const bootstrap = Bootstrap(ProductionBootstrapDelegate());
