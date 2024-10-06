@@ -2,6 +2,14 @@
   // See https://go.microsoft.com/fwlink/?LinkId=733558
   // for the documentation about the tasks.json format
   "version": "2.0.0",
+  // "windows": {
+  //   "options": {
+  //     "shell": {
+  //       "executable": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  //       "args": ["-Command"]
+  //     }
+  //   }
+  // },
   "tasks": [
     {
       "label": "build_runner_watch",
@@ -34,7 +42,7 @@
         },
         "background": {
           "activeOnStart": true,
-          "beginsPattern": "^(\\[INFO\\] Starting Build|\\[INFO\\] Generating build)",
+          "beginsPattern": "^(\\[INFO\\] Starting Build|\\[INFO\\] Generating build|\\[INFO\\] Building)",
           "endsPattern": "^(\\[INFO\\] Succeeded|\\[SEVERE\\] Failed|\\[INFO\\] Builds finished)"
         }
       }
