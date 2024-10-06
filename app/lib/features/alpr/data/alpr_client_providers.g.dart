@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'alpr_service_providers.dart';
+part of 'alpr_client_providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$alprGetLicensePlatesFutureHash() =>
-    r'84d8d4a07352becea490108a078abdb002dc5147';
+    r'74481578e79590feeb5b77d652246202d524f020';
 
 /// Copied from Dart SDK
 class _SystemHash {

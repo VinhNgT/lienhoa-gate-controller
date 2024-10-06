@@ -15,6 +15,7 @@ targets:
           include:
             - "lib/**/**_repository.dart"
             - "lib/**/**_service.dart"
+            - "lib/**/**_client.dart"
             - "lib/**/**_provider.dart"
             - "lib/**/**_providers.dart"
             - "lib/**/**_controller.dart"

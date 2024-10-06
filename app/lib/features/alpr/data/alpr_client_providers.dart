@@ -1,18 +1,18 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:lienhoa_gate_controller/features/alpr/application/alpr_service.dart';
+import 'package:lienhoa_gate_controller/features/alpr/data/alpr_client.dart';
 import 'package:lienhoa_gate_controller/features/camera/application/camera_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'alpr_service_providers.g.dart';
+part 'alpr_client_providers.g.dart';
 
 @riverpod
 FutureOr<List<String>> alprGetLicensePlatesFuture(
   AlprGetLicensePlatesFutureRef ref,
   Uint8List imageFile,
 ) {
-  final service = ref.watch(alprServiceProvider);
+  final service = ref.watch(alprClientProvider);
 
   final CancelToken cancelToken = CancelToken();
   ref.onDispose(cancelToken.cancel);

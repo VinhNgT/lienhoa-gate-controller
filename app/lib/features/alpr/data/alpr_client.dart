@@ -5,10 +5,10 @@ import 'package:lienhoa_gate_controller/features/alpr/domain/alpr_response.dart'
 import 'package:lienhoa_gate_controller/networking/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'alpr_service.g.dart';
+part 'alpr_client.g.dart';
 
-class AlprService {
-  const AlprService({required this.alprDio});
+class AlprClient {
+  const AlprClient({required this.alprDio});
   final Dio alprDio;
 
   Future<List<String>> getLicensePlates({
@@ -35,7 +35,7 @@ class AlprService {
 }
 
 @riverpod
-AlprService alprService(AlprServiceRef ref) {
+AlprClient alprClient(AlprClientRef ref) {
   final dio = ref.watch(dioProvider('http://localhost'));
-  return AlprService(alprDio: dio);
+  return AlprClient(alprDio: dio);
 }
