@@ -4,8 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lienhoa_gate_controller/constants/app_sizes.dart';
-import 'package:lienhoa_gate_controller/features/alpr/data/alpr_client_providers.dart';
 import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
+import 'package:lienhoa_gate_controller/features/log_view/application/log_view_providers.dart';
 import 'package:lienhoa_gate_controller/utils/context_extensions.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
@@ -15,13 +15,7 @@ class LogViewScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logs = useState(<String>[]);
-
-    ref.listen(alprCapturedImageLicensePlatesFutureProvider, (_, next) {
-      if (next is AsyncData) {
-        logs.value = [next.value.toString(), ...logs.value];
-      }
-    });
+    final logs = ref.watch(logViewListDataProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +54,7 @@ class LogViewScreen extends HookConsumerWidget {
           ),
           borderRadius: BorderRadius.circular(kSize_8),
         ),
-        child: LogList(logs: logs.value),
+        child: LogList(logs: logs),
       ),
     );
   }

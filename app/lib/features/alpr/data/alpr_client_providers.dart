@@ -26,11 +26,14 @@ FutureOr<List<String>> alprGetLicensePlatesFuture(
 @riverpod
 FutureOr<List<String>> alprCapturedImageLicensePlatesFuture(
   AlprCapturedImageLicensePlatesFutureRef ref,
-) {
+) async {
   final img = ref.watch(capturedCameraImageProvider);
   if (img == null) {
     return [];
   }
 
-  return ref.watch(alprGetLicensePlatesFutureProvider(img).future);
+  final licensePlates =
+      await ref.watch(alprGetLicensePlatesFutureProvider(img).future);
+
+  return licensePlates;
 }

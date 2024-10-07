@@ -164,7 +164,7 @@ class _AlprGetLicensePlatesFutureProviderElement
 }
 
 String _$alprCapturedImageLicensePlatesFutureHash() =>
-    r'5c7feb1a7383ab19d742af9ee6dcc43c61c9fabf';
+    r'03e1bac525d6b5390304b10e0e22d64d4b33012c';
 
 /// See also [alprCapturedImageLicensePlatesFuture].
 @ProviderFor(alprCapturedImageLicensePlatesFuture)

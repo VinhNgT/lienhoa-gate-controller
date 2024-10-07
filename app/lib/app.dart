@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lienhoa_gate_controller/features/auto_gate/application/auto_gate_service.dart';
 import 'package:lienhoa_gate_controller/routing/app_router_provider.dart';
 import 'package:lienhoa_gate_controller/theme/custom_app_theme.dart';
 import 'package:lienhoa_gate_controller/theme/flex_color_theme.dart';
@@ -9,9 +10,14 @@ import 'package:lienhoa_gate_controller/utils/context_extensions.dart';
 class MyApp extends HookConsumerWidget {
   const MyApp({super.key});
 
+  void _keepAppServicesAlive(WidgetRef ref) {
+    ref.listen(autoGateControllerProvider, (_, __) {});
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
+    _keepAppServicesAlive(ref);
 
     return MaterialApp.router(
       title: 'LienHoa gate controller',
