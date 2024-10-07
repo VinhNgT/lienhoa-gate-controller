@@ -11,7 +11,7 @@ part 'logger_provider.g.dart';
 /// [Logger] instance.
 @Riverpod(keepAlive: true)
 Logger logger(LoggerRef ref) {
-  const logLevel = Level.debug;
+  const logLevel = Level.info;
 
   final logger = Logger(
     filter: ProductionFilter(),
