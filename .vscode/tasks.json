@@ -35,7 +35,7 @@
       "problemMatcher": {
         "base": "$dart-build_runner",
         "pattern": {
-          "regexp": "^\\[(WARNING)\\] (.*)",
+          "regexp": "^\\[(WARNING|SEVERE)\\] (.*)",
           "severity": 1,
           "message": 2,
           "file": 0
