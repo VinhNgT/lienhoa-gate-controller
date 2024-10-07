@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lienhoa_gate_controller/features/camera/application/camera_controller.dart';
+import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
 import 'package:lienhoa_gate_controller/features/camera/presentation/camera_view.dart';
 import 'package:lienhoa_gate_controller/utils/context_extensions.dart';
 
@@ -40,8 +40,7 @@ class CapturedImageView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final capturedImage = ref
-        .watch(cameraControllerProvider.select((value) => value.capturedImage));
+    final capturedImage = ref.watch(capturedCameraImageProvider);
 
     return capturedImage != null
         ? Image.memory(

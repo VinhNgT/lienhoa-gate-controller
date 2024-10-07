@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lienhoa_gate_controller/constants/app_sizes.dart';
-import 'package:lienhoa_gate_controller/features/alpr/application/alpr_service_providers.dart';
-import 'package:lienhoa_gate_controller/features/camera/application/camera_controller.dart';
+import 'package:lienhoa_gate_controller/features/alpr/data/alpr_client_providers.dart';
+import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
 import 'package:lienhoa_gate_controller/utils/context_extensions.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
@@ -14,6 +15,14 @@ class LogViewScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final logs = useState(<String>[]);
+
+    ref.listen(alprCapturedImageLicensePlatesFutureProvider, (_, next) {
+      if (next is AsyncData) {
+        logs.value = [...logs.value, next.value.toString()];
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nhật ký'),
@@ -21,18 +30,8 @@ class LogViewScreen extends HookConsumerWidget {
           FilledButton.tonalIcon(
             onPressed: () async {
               debugPrint('Capturing image');
-              await ref.read(cameraControllerProvider.notifier).capture();
+              await ref.read(capturedCameraImageProvider.notifier).capture();
               debugPrint('Image captured');
-
-              final keepAlive = ref.listenManual(
-                alprCapturedImageLicensePlatesFutureProvider,
-                (previous, next) {},
-              );
-              final response = await ref
-                  .read(alprCapturedImageLicensePlatesFutureProvider.future);
-
-              keepAlive.close();
-              debugPrint(response.toString());
             },
             icon: const Icon(Symbols.center_focus_strong),
             label: const Text('Xử lý ảnh hiện tại'),
@@ -59,7 +58,41 @@ class LogViewScreen extends HookConsumerWidget {
           ),
           borderRadius: BorderRadius.circular(kSize_8),
         ),
+        child: LogList(logs: logs.value),
       ),
+    );
+  }
+}
+
+class LogList extends HookConsumerWidget {
+  const LogList({super.key, required this.logs});
+  final List<String> logs;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listKey = useRef(GlobalKey<AnimatedListState>()).value;
+
+    useValueChanged<List<String>, void>(logs, (oldValue, _) {
+      for (int i = 0; i < logs.length - oldValue.length; i++) {
+        listKey.currentState?.insertItem(0);
+      }
+    });
+
+    return AnimatedList(
+      key: listKey,
+      // reverse: true,
+      // initialItemCount: logs.length,
+      itemBuilder: (context, index, animation) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, -1),
+            end: Offset.zero,
+          ).animate(animation),
+          child: ListTile(
+            title: Text(logs[index]),
+          ),
+        );
+      },
     );
   }
 }

@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:lienhoa_gate_controller/features/alpr/data/alpr_client.dart';
-import 'package:lienhoa_gate_controller/features/camera/application/camera_controller.dart';
+import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'alpr_client_providers.g.dart';
@@ -27,8 +27,7 @@ FutureOr<List<String>> alprGetLicensePlatesFuture(
 FutureOr<List<String>> alprCapturedImageLicensePlatesFuture(
   AlprCapturedImageLicensePlatesFutureRef ref,
 ) {
-  final img = ref
-      .watch(cameraControllerProvider.select((value) => value.capturedImage));
+  final img = ref.watch(capturedCameraImageProvider);
   if (img == null) {
     return [];
   }
