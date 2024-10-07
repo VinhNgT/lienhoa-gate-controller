@@ -19,7 +19,7 @@ class LogViewScreen extends HookConsumerWidget {
 
     ref.listen(alprCapturedImageLicensePlatesFutureProvider, (_, next) {
       if (next is AsyncData) {
-        logs.value = [...logs.value, next.value.toString()];
+        logs.value = [next.value.toString(), ...logs.value];
       }
     });
 
@@ -44,6 +44,8 @@ class LogViewScreen extends HookConsumerWidget {
           ),
           const Gap(kSize_8),
         ],
+        // Disable scrolled under effects.
+        notificationPredicate: (_) => false,
       ),
       body: Container(
         margin: const EdgeInsets.only(
@@ -68,28 +70,40 @@ class LogList extends HookConsumerWidget {
   const LogList({super.key, required this.logs});
   final List<String> logs;
 
+  final _listSpacing = kSize_8;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listKey = useRef(GlobalKey<AnimatedListState>()).value;
 
     useValueChanged<List<String>, void>(logs, (oldValue, _) {
       for (int i = 0; i < logs.length - oldValue.length; i++) {
-        listKey.currentState?.insertItem(0);
+        listKey.currentState?.insertItem(0, duration: Durations.short2);
       }
     });
 
     return AnimatedList(
       key: listKey,
-      // reverse: true,
-      // initialItemCount: logs.length,
+      padding: const EdgeInsets.symmetric(horizontal: kSize_8),
+      reverse: true,
       itemBuilder: (context, index, animation) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, -1),
-            end: Offset.zero,
-          ).animate(animation),
-          child: ListTile(
-            title: Text(logs[index]),
+        return SizeTransition(
+          axisAlignment: -1,
+          axis: Axis.vertical,
+          sizeFactor: animation,
+          child: Container(
+            margin: EdgeInsets.only(
+              top: index == logs.length - 1 ? _listSpacing : _listSpacing / 2,
+              bottom: index == 0 ? _listSpacing : _listSpacing / 2,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(kSize_8),
+            ),
+            child: ListTile(
+              title: Text(logs[index]),
+            ),
           ),
         );
       },
