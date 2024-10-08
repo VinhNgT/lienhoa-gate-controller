@@ -7,7 +7,7 @@ part of 'auto_gate_service.dart';
 // **************************************************************************
 
 String _$autoGateControllerHash() =>
-    r'6f4f3bda2e147ff24d2c389d4f3a8fb23ef342d2';
+    r'4d9ecf5f74451c5443997a2967800b7d92d042da';
 
 /// See also [AutoGateController].
 @ProviderFor(AutoGateController)

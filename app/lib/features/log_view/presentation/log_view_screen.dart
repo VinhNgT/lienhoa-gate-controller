@@ -13,9 +13,11 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 class LogViewScreen extends HookConsumerWidget {
   const LogViewScreen({super.key});
 
+  final _logAnimationDuration = Durations.short2;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logs = ref.watch(logViewListDataProvider);
+    final logs = ref.watch(logListDataThrottledProvider(_logAnimationDuration));
 
     return Scaffold(
       appBar: AppBar(
@@ -54,15 +56,21 @@ class LogViewScreen extends HookConsumerWidget {
           ),
           borderRadius: BorderRadius.circular(kSize_8),
         ),
-        child: LogList(logs: logs),
+        child: LogList(logs: logs, animationDuration: _logAnimationDuration),
       ),
     );
   }
 }
 
 class LogList extends HookConsumerWidget {
-  const LogList({super.key, required this.logs});
+  const LogList({
+    super.key,
+    required this.logs,
+    required this.animationDuration,
+  });
+
   final List<String> logs;
+  final Duration animationDuration;
 
   final _listSpacing = kSize_8;
 
@@ -71,9 +79,11 @@ class LogList extends HookConsumerWidget {
     final listKey = useRef(GlobalKey<AnimatedListState>()).value;
 
     useValueChanged<List<String>, void>(logs, (oldValue, _) {
-      for (int i = 0; i < logs.length - oldValue.length; i++) {
-        listKey.currentState?.insertItem(0, duration: Durations.short2);
-      }
+      listKey.currentState?.insertAllItems(
+        0,
+        logs.length - oldValue.length,
+        duration: animationDuration,
+      );
     });
 
     return AnimatedList(

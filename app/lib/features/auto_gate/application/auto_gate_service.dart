@@ -10,9 +10,7 @@ class AutoGateController extends _$AutoGateController {
   void build() {
     ref.listen(alprCapturedImageLicensePlatesFutureProvider, (previous, next) {
       if (previous != null && next is AsyncData) {
-        ref
-            .read(logViewListDataProvider.notifier)
-            .addLog('ALPR: ${next.value}');
+        ref.read(logListDataProvider.notifier).addLog('ALPR: ${next.value}');
       }
     });
   }
