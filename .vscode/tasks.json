@@ -41,7 +41,7 @@
           "file": 0
         },
         "background": {
-          "activeOnStart": true,
+          "activeOnStart": false,
           "beginsPattern": "^(\\[INFO\\] Starting Build|\\[INFO\\] Generating build|\\[INFO\\] Building)",
           "endsPattern": "^(\\[INFO\\] Succeeded|\\[SEVERE\\] Failed|\\[INFO\\] Builds finished)"
         }
