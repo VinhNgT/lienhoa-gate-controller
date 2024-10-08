@@ -57,7 +57,7 @@ class RaspiGateControlClient {
       cancelToken: cancelToken,
     );
 
-    return (response.data!['distance'] as double).toInt();
+    return (response.data!['distance'] as double) ~/ 10;
   }
 }
 

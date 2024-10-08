@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'raspi_gate_control_providers.g.dart';
 
+/// Return the distance sensor value from the Raspberry Pi in cm.
 @riverpod
 Stream<int> raspiDistanceSensorValueStream(
   RaspiDistanceSensorValueStreamRef ref,

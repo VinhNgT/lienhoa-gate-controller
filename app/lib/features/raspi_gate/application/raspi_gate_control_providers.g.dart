@@ -9,7 +9,9 @@ part of 'raspi_gate_control_providers.dart';
 String _$raspiDistanceSensorValueStreamHash() =>
     r'103d33f3632df461f12d59b3fd9080a6324c47f8';
 
-/// See also [raspiDistanceSensorValueStream].
+/// Return the distance sensor value from the Raspberry Pi in cm.
+///
+/// Copied from [raspiDistanceSensorValueStream].
 @ProviderFor(raspiDistanceSensorValueStream)
 final raspiDistanceSensorValueStreamProvider =
     AutoDisposeStreamProvider<int>.internal(
