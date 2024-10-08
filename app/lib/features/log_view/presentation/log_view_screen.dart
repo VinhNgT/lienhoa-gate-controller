@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lienhoa_gate_controller/constants/app_sizes.dart';
-import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
+import 'package:lienhoa_gate_controller/features/auto_gate/application/auto_gate_service.dart';
 import 'package:lienhoa_gate_controller/features/log_view/application/log_view_providers.dart';
 import 'package:lienhoa_gate_controller/utils/context_extensions.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -25,9 +25,9 @@ class LogViewScreen extends HookConsumerWidget {
         actions: [
           FilledButton.tonalIcon(
             onPressed: () async {
-              debugPrint('Capturing image');
-              await ref.read(capturedCameraImageProvider.notifier).capture();
-              debugPrint('Image captured');
+              ref
+                  .read(autoGateControllerProvider.notifier)
+                  .manualStartProcess();
             },
             icon: const Icon(Symbols.center_focus_strong),
             label: const Text('Xử lý ảnh hiện tại'),
