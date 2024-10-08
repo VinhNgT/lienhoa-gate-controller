@@ -23,7 +23,8 @@ class CapturedCameraImage extends _$CapturedCameraImage {
     return null;
   }
 
-  Future<void> capture() async {
+  Future<Uint8List?> captureNewImage() async {
     state = await ref.read(cameraPlayerProvider).screenshot();
+    return state;
   }
 }

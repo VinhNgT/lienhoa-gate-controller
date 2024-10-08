@@ -21,7 +21,7 @@ final cameraPlayerProvider = AutoDisposeProvider<Player>.internal(
 
 typedef CameraPlayerRef = AutoDisposeProviderRef<Player>;
 String _$capturedCameraImageHash() =>
-    r'16fdf7261e6b1bff4a62488bf25a7c18ec11a4f9';
+    r'725e80061b2adc7e81a0c87e71e362f2c6cbd2ff';
 
 /// See also [CapturedCameraImage].
 @ProviderFor(CapturedCameraImage)
