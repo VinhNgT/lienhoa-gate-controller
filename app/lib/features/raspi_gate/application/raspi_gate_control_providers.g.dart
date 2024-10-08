@@ -7,15 +7,16 @@ part of 'raspi_gate_control_providers.dart';
 // **************************************************************************
 
 String _$raspiDistanceSensorValueStreamHash() =>
-    r'103d33f3632df461f12d59b3fd9080a6324c47f8';
+    r'c9b9a77c16620c0facb9a0f2941a9c5b43d0fee1';
 
 /// Return the distance sensor value from the Raspberry Pi in cm.
 ///
-/// Copied from [raspiDistanceSensorValueStream].
-@ProviderFor(raspiDistanceSensorValueStream)
+/// Copied from [RaspiDistanceSensorValueStream].
+@ProviderFor(RaspiDistanceSensorValueStream)
 final raspiDistanceSensorValueStreamProvider =
-    AutoDisposeStreamProvider<int>.internal(
-  raspiDistanceSensorValueStream,
+    AutoDisposeStreamNotifierProvider<RaspiDistanceSensorValueStream,
+        int>.internal(
+  RaspiDistanceSensorValueStream.new,
   name: r'raspiDistanceSensorValueStreamProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
@@ -24,6 +25,6 @@ final raspiDistanceSensorValueStreamProvider =
   allTransitiveDependencies: null,
 );
 
-typedef RaspiDistanceSensorValueStreamRef = AutoDisposeStreamProviderRef<int>;
+typedef _$RaspiDistanceSensorValueStream = AutoDisposeStreamNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

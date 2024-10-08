@@ -6,6 +6,8 @@ part 'raspi_gate_control_client.g.dart';
 
 enum RaspiGateLightStatus { none, processing, allow, deny }
 
+enum RaspiGateState { open, close }
+
 class RaspiGateControlClient {
   const RaspiGateControlClient({required this.raspiDio});
   final Dio raspiDio;
@@ -14,20 +16,20 @@ class RaspiGateControlClient {
     required RaspiGateLightStatus status,
     CancelToken? cancelToken,
   }) async {
-    final _ = await raspiDio.post(
-      '/set_status_lights/',
+    final _ = await raspiDio.patch(
+      '/status_lights_state/',
       data: {'state': status.name},
       cancelToken: cancelToken,
     );
   }
 
   Future<void> setGateState({
-    required bool isOpen,
+    required RaspiGateState state,
     CancelToken? cancelToken,
   }) async {
-    final _ = await raspiDio.post(
-      '/set_gate_state/',
-      data: {'state': isOpen},
+    final _ = await raspiDio.patch(
+      '/gate/',
+      data: {'state': state.name},
       cancelToken: cancelToken,
     );
   }
@@ -43,9 +45,14 @@ class RaspiGateControlClient {
     );
   }
 
-  Future<void> makeSound({CancelToken? cancelToken}) async {
+  Future<void> makeSound({
+    required int frequency,
+    required double duration,
+    CancelToken? cancelToken,
+  }) async {
     final _ = await raspiDio.post(
       '/buzzer/',
+      data: {'frequency': frequency, 'duration': duration},
       cancelToken: cancelToken,
     );
   }
