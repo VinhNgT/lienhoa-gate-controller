@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lienhoa_gate_controller/constants/app_sizes.dart';
 import 'package:lienhoa_gate_controller/features/auto_gate/application/auto_gate_service.dart';
 import 'package:lienhoa_gate_controller/features/log_view/application/log_view_providers.dart';
+import 'package:lienhoa_gate_controller/routing/app_router_provider.gr.dart';
 import 'package:lienhoa_gate_controller/utils/context_extensions.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
@@ -32,9 +33,11 @@ class LogViewScreen extends HookConsumerWidget {
           ),
           const Gap(kSize_8),
           FilledButton.icon(
-            onPressed: () {},
             icon: const Icon(Symbols.settings),
             label: const Text('Cài đặt'),
+            onPressed: () {
+              context.pushRoute(const SettingsRoute());
+            },
           ),
           const Gap(kSize_8),
         ],
