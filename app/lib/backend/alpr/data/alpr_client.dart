@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:lienhoa_gate_controller/features/alpr/domain/alpr_response.dart';
+import 'package:lienhoa_gate_controller/backend/alpr/domain/alpr_response.dart';
 import 'package:lienhoa_gate_controller/networking/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

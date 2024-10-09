@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:lienhoa_gate_controller/features/alpr/data/alpr_client.dart';
-import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
+import 'package:lienhoa_gate_controller/backend/alpr/data/alpr_client.dart';
+import 'package:lienhoa_gate_controller/backend/camera/application/camera_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'alpr_client_providers.g.dart';

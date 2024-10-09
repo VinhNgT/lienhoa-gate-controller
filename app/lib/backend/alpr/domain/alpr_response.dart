@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:lienhoa_gate_controller/features/alpr/domain/region_of_interest.dart';
-import 'package:lienhoa_gate_controller/features/alpr/domain/result.dart';
+import 'package:lienhoa_gate_controller/backend/alpr/domain/region_of_interest.dart';
+import 'package:lienhoa_gate_controller/backend/alpr/domain/result.dart';
 
 part 'alpr_response.freezed.dart';
 part 'alpr_response.g.dart';

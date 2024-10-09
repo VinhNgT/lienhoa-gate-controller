@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:lienhoa_gate_controller/features/camera/data/camera_client.dart';
+import 'package:lienhoa_gate_controller/backend/camera/data/camera_client.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

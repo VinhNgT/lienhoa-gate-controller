@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
-import 'package:lienhoa_gate_controller/features/camera/presentation/camera_view.dart';
+import 'package:lienhoa_gate_controller/backend/camera/application/camera_providers.dart';
+import 'package:lienhoa_gate_controller/backend/camera/presentation/camera_view.dart';
 import 'package:lienhoa_gate_controller/utils/context_extensions.dart';
 
 @RoutePage()

@@ -2,11 +2,11 @@ import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lienhoa_gate_controller/features/alpr/data/alpr_client_providers.dart';
-import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
+import 'package:lienhoa_gate_controller/backend/alpr/data/alpr_client_providers.dart';
+import 'package:lienhoa_gate_controller/backend/camera/application/camera_providers.dart';
+import 'package:lienhoa_gate_controller/backend/raspi_gate/application/raspi_gate_control_providers.dart';
+import 'package:lienhoa_gate_controller/backend/raspi_gate/data/raspi_gate_control_client.dart';
 import 'package:lienhoa_gate_controller/features/log_view/application/log_view_providers.dart';
-import 'package:lienhoa_gate_controller/features/raspi_gate/application/raspi_gate_control_providers.dart';
-import 'package:lienhoa_gate_controller/features/raspi_gate/data/raspi_gate_control_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auto_gate_service.g.dart';

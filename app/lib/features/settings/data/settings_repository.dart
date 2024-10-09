@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lienhoa_gate_controller/backend/shared_preferences/share_preferences_provider.dart';
 import 'package:lienhoa_gate_controller/features/settings/application/settings_providers.dart';
 import 'package:lienhoa_gate_controller/features/settings/domain/settings.dart';
-import 'package:lienhoa_gate_controller/features/shared_preferences/share_preferences_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
