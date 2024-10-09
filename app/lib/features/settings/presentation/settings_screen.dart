@@ -20,80 +20,108 @@ class SettingsScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useRef(GlobalKey<FormBuilderState>()).value;
+    final scaffoldMessengerKey =
+        useRef(GlobalKey<ScaffoldMessengerState>()).value;
     final settings = ref.watch(settingsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cài đặt'),
-        actions: [
-          OutlinedButton.icon(
-            icon: const Icon(Symbols.save),
-            label: const Text('Lưu'),
-            onPressed: () async {
-              if (!formKey.currentState!.saveAndValidate()) {
-                return;
-              }
+    return ScaffoldMessenger(
+      key: scaffoldMessengerKey,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Cài đặt'),
+          actions: [
+            TextButton.icon(
+              icon: const Icon(Symbols.reset_wrench),
+              label: const Text('Đặt lại mặc định'),
+              onPressed: () {
+                ref.read(settingsRepositoryProvider).resetSettings();
 
-              final settings = Settings.fromJson(formKey.currentState!.value);
-              debugPrint('Settings: $settings');
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  formKey.currentState!.reset();
+                  scaffoldMessengerKey.currentState!.showSnackBar(
+                    const SnackBar(
+                      content: Text('Đã đặt lại mặc định'),
+                    ),
+                  );
+                });
+              },
+            ),
+            const Gap(kSize_8),
+            OutlinedButton.icon(
+              icon: const Icon(Symbols.save),
+              label: const Text('Lưu'),
+              onPressed: () async {
+                if (!formKey.currentState!.saveAndValidate()) {
+                  return;
+                }
 
-              await ref.read(settingsRepositoryProvider).saveSettings(settings);
-            },
-          ),
-          const Gap(kSize_8),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: kSize_8,
-            horizontal: kSize_12,
-          ),
-          child: FormBuilder(
-            key: formKey,
-            child: Column(
-              children: <Widget>[
-                FormBuilderTextField(
-                  name: SettingsRepository.raspiAddressKey,
-                  decoration: const InputDecoration(
-                    labelText: 'Địa chỉ Raspberry Pi',
-                    hintText: 'Mặc định: raspberrypi',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                final settings = Settings.fromJson(formKey.currentState!.value);
+                await ref
+                    .read(settingsRepositoryProvider)
+                    .saveSettings(settings);
+
+                scaffoldMessengerKey.currentState!.showSnackBar(
+                  const SnackBar(
+                    content: Text('Đã lưu cài đặt'),
                   ),
-                  initialValue: settings.raspiAddress,
-                ),
-                FormBuilderTextField(
-                  name: SettingsRepository.alprAddressKey,
-                  decoration: const InputDecoration(
-                    labelText: 'Địa chỉ ALPR',
-                    hintText: 'Mặc định: localhost',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                );
+              },
+            ),
+            const Gap(kSize_8),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: kSize_8,
+              horizontal: kSize_12,
+            ),
+            child: FormBuilder(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  FormBuilderTextField(
+                    name: SettingsRepository.raspiAddressKey,
+                    decoration: const InputDecoration(
+                      labelText: 'Địa chỉ Raspberry Pi',
+                      hintText: 'Mặc định: raspberrypi',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    initialValue: settings.raspiAddress,
                   ),
-                  initialValue: settings.alprAddress,
-                ),
-                FormBuilderSlider(
-                  name: SettingsRepository.sensorDistanceThresholdKey,
-                  min: 2,
-                  max: 20,
-                  initialValue: settings.sensorDistanceThreshold,
-                  numberFormat:
-                      NumberFormat.decimalPatternDigits(decimalDigits: 1),
-                  valueTransformer: (value) =>
-                      double.parse((value as double).toStringAsFixed(1)),
-                  displayValues: DisplayValues.all,
-                  decoration: const InputDecoration(
-                    labelText: 'Ngưỡng cảm biến khoảng cách (cm)',
-                    hintText: 'Mặc định: 10',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  FormBuilderTextField(
+                    name: SettingsRepository.alprAddressKey,
+                    decoration: const InputDecoration(
+                      labelText: 'Địa chỉ ALPR',
+                      hintText: 'Mặc định: localhost',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    initialValue: settings.alprAddress,
                   ),
-                ),
-                FormBuilderField(
-                  name: SettingsRepository.allowedLicensePlatesKey,
-                  initialValue: List.of(settings.allowedLicensePlates),
-                  builder: (FormFieldState<List<String>> field) =>
-                      AllowedLicensePlatesField(field: field),
-                ),
-              ].separated(const Gap(kSize_20)),
+                  FormBuilderSlider(
+                    name: SettingsRepository.sensorDistanceThresholdKey,
+                    min: 2,
+                    max: 20,
+                    initialValue: settings.sensorDistanceThreshold,
+                    numberFormat:
+                        NumberFormat.decimalPatternDigits(decimalDigits: 1),
+                    valueTransformer: (value) =>
+                        double.parse((value as double).toStringAsFixed(1)),
+                    displayValues: DisplayValues.all,
+                    decoration: const InputDecoration(
+                      labelText: 'Ngưỡng cảm biến khoảng cách (cm)',
+                      hintText: 'Mặc định: 10',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                  ),
+                  FormBuilderField(
+                    name: SettingsRepository.allowedLicensePlatesKey,
+                    initialValue: settings.allowedLicensePlates,
+                    builder: (FormFieldState<List<String>> field) =>
+                        AllowedLicensePlatesField(field: field),
+                  ),
+                ].separated(const Gap(kSize_20)),
+              ),
             ),
           ),
         ),

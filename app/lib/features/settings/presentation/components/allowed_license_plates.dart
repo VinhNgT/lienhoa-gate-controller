@@ -16,6 +16,7 @@ class AllowedLicensePlatesField extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textController = useTextEditingController();
+    final modifiableList = List.of(field.value!);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,10 +40,11 @@ class AllowedLicensePlatesField extends HookConsumerWidget {
                 final plate = textController.text
                     .trim()
                     .replaceAll('-', '')
-                    .replaceAll('.', '');
+                    .replaceAll('.', '')
+                    .toUpperCase();
 
                 if (plate.isNotEmpty) {
-                  field.didChange(field.value!..add(plate));
+                  field.didChange(modifiableList..insert(0, plate));
                   textController.clear();
                 }
               },
@@ -62,7 +64,7 @@ class AllowedLicensePlatesField extends HookConsumerWidget {
                   color: Colors.red,
                 ),
                 onPressed: () {
-                  field.didChange(field.value!..remove(plate));
+                  field.didChange(modifiableList..remove(plate));
                 },
               ),
             );

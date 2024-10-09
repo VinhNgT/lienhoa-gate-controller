@@ -36,6 +36,10 @@ class CustomAppTheme {
           tapTargetSize: MaterialTapTargetSize.padded,
         ),
       ),
+      snackBarTheme: theme.snackBarTheme.copyWith(
+        behavior: SnackBarBehavior.floating,
+        showCloseIcon: true,
+      ),
     );
   }
 }
