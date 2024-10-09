@@ -10,6 +10,7 @@ class Settings with _$Settings {
     required String raspiAddress,
     required String alprAddress,
     required double sensorDistanceThreshold,
+    required List<String> allowedLicensePlates,
   }) = _Settings;
 
   factory Settings.fromJson(Map<String, dynamic> json) =>

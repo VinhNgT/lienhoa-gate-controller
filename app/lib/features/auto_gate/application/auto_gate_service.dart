@@ -172,18 +172,8 @@ class AutoGateService {
 @riverpod
 AutoGateService autoGateService(AutoGateServiceRef ref) {
   final raspiGateControlClient = ref.watch(raspiGateControlClientProvider);
-  final allowedLicensePlates = [
-    '51F17812',
-    '29A51796',
-    '43A18650',
-    '51H61687',
-    '89A07379',
-    '98A17339',
-    '30G40304',
-    '30A04180',
-    '29D07881',
-    '14A09290',
-  ];
+  final allowedLicensePlates =
+      ref.watch(settingsProvider.select((value) => value.allowedLicensePlates));
 
   final service = AutoGateService(
     ref: ref,

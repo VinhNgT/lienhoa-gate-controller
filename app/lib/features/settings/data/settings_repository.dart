@@ -19,6 +19,7 @@ class SettingsRepository {
   static const raspiAddressKey = 'raspiAddress';
   static const alprAddressKey = 'alprAddress';
   static const sensorDistanceThresholdKey = 'sensorDistanceThreshold';
+  static const allowedLicensePlatesKey = 'allowedLicensePlates';
 
   Settings getSettings() {
     return Settings(
@@ -26,6 +27,19 @@ class SettingsRepository {
       alprAddress: prefs.getString(alprAddressKey) ?? 'localhost',
       sensorDistanceThreshold:
           prefs.getDouble(sensorDistanceThresholdKey) ?? 10,
+      allowedLicensePlates: prefs.getStringList(allowedLicensePlatesKey) ??
+          [
+            '51F17812',
+            '29A51796',
+            '43A18650',
+            '51H61687',
+            '89A07379',
+            '98A17339',
+            '30G40304',
+            '30A04180',
+            '29D07881',
+            '14A09290',
+          ],
     );
   }
 
@@ -46,6 +60,20 @@ class SettingsRepository {
       sensorDistanceThresholdKey,
       settings.sensorDistanceThreshold,
     );
+
+    await prefs.setStringList(
+      allowedLicensePlatesKey,
+      settings.allowedLicensePlates,
+    );
+
+    container.invalidate(settingsProvider);
+  }
+
+  Future<void> resetSettings() async {
+    await prefs.remove(raspiAddressKey);
+    await prefs.remove(alprAddressKey);
+    await prefs.remove(sensorDistanceThresholdKey);
+    await prefs.remove(allowedLicensePlatesKey);
 
     container.invalidate(settingsProvider);
   }

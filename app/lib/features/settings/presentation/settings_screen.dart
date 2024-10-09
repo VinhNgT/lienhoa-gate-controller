@@ -9,6 +9,7 @@ import 'package:lienhoa_gate_controller/constants/app_sizes.dart';
 import 'package:lienhoa_gate_controller/features/settings/application/settings_providers.dart';
 import 'package:lienhoa_gate_controller/features/settings/data/settings_repository.dart';
 import 'package:lienhoa_gate_controller/features/settings/domain/settings.dart';
+import 'package:lienhoa_gate_controller/features/settings/presentation/components/allowed_license_plates.dart';
 import 'package:lienhoa_gate_controller/utils/list_extention.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -85,6 +86,12 @@ class SettingsScreen extends HookConsumerWidget {
                     hintText: 'Mặc định: 10',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
+                ),
+                FormBuilderField(
+                  name: SettingsRepository.allowedLicensePlatesKey,
+                  initialValue: List.of(settings.allowedLicensePlates),
+                  builder: (FormFieldState<List<String>> field) =>
+                      AllowedLicensePlatesField(field: field),
                 ),
               ].separated(const Gap(kSize_20)),
             ),

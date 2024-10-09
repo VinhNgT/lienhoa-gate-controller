@@ -23,6 +23,7 @@ mixin _$Settings {
   String get raspiAddress => throw _privateConstructorUsedError;
   String get alprAddress => throw _privateConstructorUsedError;
   double get sensorDistanceThreshold => throw _privateConstructorUsedError;
+  List<String> get allowedLicensePlates => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +39,8 @@ abstract class $SettingsCopyWith<$Res> {
   $Res call(
       {String raspiAddress,
       String alprAddress,
-      double sensorDistanceThreshold});
+      double sensorDistanceThreshold,
+      List<String> allowedLicensePlates});
 }
 
 /// @nodoc
@@ -57,6 +59,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? raspiAddress = null,
     Object? alprAddress = null,
     Object? sensorDistanceThreshold = null,
+    Object? allowedLicensePlates = null,
   }) {
     return _then(_value.copyWith(
       raspiAddress: null == raspiAddress
@@ -71,6 +74,10 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.sensorDistanceThreshold
           : sensorDistanceThreshold // ignore: cast_nullable_to_non_nullable
               as double,
+      allowedLicensePlates: null == allowedLicensePlates
+          ? _value.allowedLicensePlates
+          : allowedLicensePlates // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -86,7 +93,8 @@ abstract class _$$SettingsImplCopyWith<$Res>
   $Res call(
       {String raspiAddress,
       String alprAddress,
-      double sensorDistanceThreshold});
+      double sensorDistanceThreshold,
+      List<String> allowedLicensePlates});
 }
 
 /// @nodoc
@@ -103,6 +111,7 @@ class __$$SettingsImplCopyWithImpl<$Res>
     Object? raspiAddress = null,
     Object? alprAddress = null,
     Object? sensorDistanceThreshold = null,
+    Object? allowedLicensePlates = null,
   }) {
     return _then(_$SettingsImpl(
       raspiAddress: null == raspiAddress
@@ -117,6 +126,10 @@ class __$$SettingsImplCopyWithImpl<$Res>
           ? _value.sensorDistanceThreshold
           : sensorDistanceThreshold // ignore: cast_nullable_to_non_nullable
               as double,
+      allowedLicensePlates: null == allowedLicensePlates
+          ? _value._allowedLicensePlates
+          : allowedLicensePlates // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -127,7 +140,9 @@ class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
   const _$SettingsImpl(
       {required this.raspiAddress,
       required this.alprAddress,
-      required this.sensorDistanceThreshold});
+      required this.sensorDistanceThreshold,
+      required final List<String> allowedLicensePlates})
+      : _allowedLicensePlates = allowedLicensePlates;
 
   factory _$SettingsImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsImplFromJson(json);
@@ -138,10 +153,18 @@ class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
   final String alprAddress;
   @override
   final double sensorDistanceThreshold;
+  final List<String> _allowedLicensePlates;
+  @override
+  List<String> get allowedLicensePlates {
+    if (_allowedLicensePlates is EqualUnmodifiableListView)
+      return _allowedLicensePlates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allowedLicensePlates);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Settings(raspiAddress: $raspiAddress, alprAddress: $alprAddress, sensorDistanceThreshold: $sensorDistanceThreshold)';
+    return 'Settings(raspiAddress: $raspiAddress, alprAddress: $alprAddress, sensorDistanceThreshold: $sensorDistanceThreshold, allowedLicensePlates: $allowedLicensePlates)';
   }
 
   @override
@@ -152,7 +175,8 @@ class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
       ..add(DiagnosticsProperty('raspiAddress', raspiAddress))
       ..add(DiagnosticsProperty('alprAddress', alprAddress))
       ..add(DiagnosticsProperty(
-          'sensorDistanceThreshold', sensorDistanceThreshold));
+          'sensorDistanceThreshold', sensorDistanceThreshold))
+      ..add(DiagnosticsProperty('allowedLicensePlates', allowedLicensePlates));
   }
 
   @override
@@ -166,13 +190,19 @@ class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
                 other.alprAddress == alprAddress) &&
             (identical(
                     other.sensorDistanceThreshold, sensorDistanceThreshold) ||
-                other.sensorDistanceThreshold == sensorDistanceThreshold));
+                other.sensorDistanceThreshold == sensorDistanceThreshold) &&
+            const DeepCollectionEquality()
+                .equals(other._allowedLicensePlates, _allowedLicensePlates));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, raspiAddress, alprAddress, sensorDistanceThreshold);
+      runtimeType,
+      raspiAddress,
+      alprAddress,
+      sensorDistanceThreshold,
+      const DeepCollectionEquality().hash(_allowedLicensePlates));
 
   @JsonKey(ignore: true)
   @override
@@ -192,7 +222,8 @@ abstract class _Settings implements Settings {
   const factory _Settings(
       {required final String raspiAddress,
       required final String alprAddress,
-      required final double sensorDistanceThreshold}) = _$SettingsImpl;
+      required final double sensorDistanceThreshold,
+      required final List<String> allowedLicensePlates}) = _$SettingsImpl;
 
   factory _Settings.fromJson(Map<String, dynamic> json) =
       _$SettingsImpl.fromJson;
@@ -203,6 +234,8 @@ abstract class _Settings implements Settings {
   String get alprAddress;
   @override
   double get sensorDistanceThreshold;
+  @override
+  List<String> get allowedLicensePlates;
   @override
   @JsonKey(ignore: true)
   _$$SettingsImplCopyWith<_$SettingsImpl> get copyWith =>
