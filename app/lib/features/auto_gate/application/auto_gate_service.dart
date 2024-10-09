@@ -7,6 +7,7 @@ import 'package:lienhoa_gate_controller/backend/camera/application/camera_provid
 import 'package:lienhoa_gate_controller/backend/raspi_gate/application/raspi_gate_control_providers.dart';
 import 'package:lienhoa_gate_controller/backend/raspi_gate/data/raspi_gate_control_client.dart';
 import 'package:lienhoa_gate_controller/features/log_view/application/log_view_providers.dart';
+import 'package:lienhoa_gate_controller/features/settings/application/settings_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auto_gate_service.g.dart';
@@ -190,10 +191,14 @@ AutoGateService autoGateService(AutoGateServiceRef ref) {
     raspiGateControlClient: raspiGateControlClient,
   );
 
+  final sensorDistanceThreshold = ref
+      .watch(settingsProvider.select((value) => value.sensorDistanceThreshold));
+
   ref.listen(raspiDistanceSensorValueStreamProvider, (previous, next) {
     switch (next) {
       // Auto capture image when distance sensor value is less than 10 cm
-      case AsyncData(:final value) when value <= 10 && !service.isProcessing:
+      case AsyncData(:final value)
+          when value <= sensorDistanceThreshold && !service.isProcessing:
         service.startProccess();
     }
   });

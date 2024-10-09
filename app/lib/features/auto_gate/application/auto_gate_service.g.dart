@@ -6,7 +6,7 @@ part of 'auto_gate_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$autoGateServiceHash() => r'4aedb50dc54c8fd903592e3648de88b4683766db';
+String _$autoGateServiceHash() => r'bd7d9ba030ab632bc19103aaa48a19f49d6e735c';
 
 /// See also [autoGateService].
 @ProviderFor(autoGateService)
