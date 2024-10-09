@@ -24,10 +24,8 @@ class LogViewScreen extends HookConsumerWidget {
         title: const Text('Nhật ký'),
         actions: [
           FilledButton.tonalIcon(
-            onPressed: () async {
-              ref
-                  .read(autoGateControllerProvider.notifier)
-                  .manualStartProcess();
+            onPressed: () {
+              ref.read(autoGateServiceProvider).startProccess();
             },
             icon: const Icon(Symbols.center_focus_strong),
             label: const Text('Xử lý ảnh hiện tại'),

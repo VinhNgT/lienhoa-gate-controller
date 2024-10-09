@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lienhoa_gate_controller/features/alpr/data/alpr_client_providers.dart';
-import 'package:lienhoa_gate_controller/features/auto_gate/domain/auto_gate_controller_state.dart';
 import 'package:lienhoa_gate_controller/features/camera/application/camera_providers.dart';
 import 'package:lienhoa_gate_controller/features/log_view/application/log_view_providers.dart';
 import 'package:lienhoa_gate_controller/features/raspi_gate/application/raspi_gate_control_providers.dart';
@@ -11,32 +11,21 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auto_gate_service.g.dart';
 
-@riverpod
-class AutoGateController extends _$AutoGateController {
-  RaspiGateControlClient get _raspiGateControlClient =>
-      ref.read(raspiGateControlClientProvider);
-
-  final _allowedLicensePlates = ['43A27208'];
-
-  @override
-  AutoGateControllerState build() {
+class AutoGateService {
+  AutoGateService({
+    required this.ref,
+    required this.allowedLicensePlates,
+    required this.raspiGateControlClient,
+  }) {
     _reset();
-    ref.listen(raspiDistanceSensorValueStreamProvider, (previous, next) {
-      switch (next) {
-        // Auto capture image when distance sensor value is less than 10 cm
-        case AsyncData(:final value) when value <= 10 && !state.isProcessing:
-          _startProccess();
-      }
-    });
-
-    return const AutoGateControllerState();
   }
 
-  void manualStartProcess() {
-    if (!state.isProcessing) {
-      _startProccess();
-    }
-  }
+  final AutoDisposeRef ref;
+  final List<String> allowedLicensePlates;
+  final RaspiGateControlClient raspiGateControlClient;
+
+  bool _isProcessing = false;
+  bool get isProcessing => _isProcessing;
 
   String _getTimeNow() {
     final now = DateTime.now();
@@ -47,7 +36,7 @@ class AutoGateController extends _$AutoGateController {
   }
 
   String? _checkMatchLicensePlate(List<String> licensePlate) {
-    return licensePlate.firstWhereOrNull(_allowedLicensePlates.contains);
+    return licensePlate.firstWhereOrNull(allowedLicensePlates.contains);
   }
 
   void _log(String message) {
@@ -57,24 +46,27 @@ class AutoGateController extends _$AutoGateController {
   }
 
   Future<void> _reset() async {
-    state = const AutoGateControllerState();
+    _isProcessing = false;
     ref.read(raspiDistanceSensorValueStreamProvider.notifier).resume();
-    await _raspiGateControlClient.setStatusLights(
+    await raspiGateControlClient.setStatusLights(
       status: RaspiGateLightStatus.none,
     );
-    await _raspiGateControlClient.setScreenText(text: 'Welcome');
+    await raspiGateControlClient.setScreenText(text: 'Welcome');
   }
 
   Future<void> _begin() async {
+    _isProcessing = true;
     _log('Phát hiện xe vào');
     ref.read(raspiDistanceSensorValueStreamProvider.notifier).pause();
-    state = state.copyWith(isProcessing: true);
-    await _raspiGateControlClient.setStatusLights(
-      status: RaspiGateLightStatus.processing,
+    await raspiGateControlClient.setStatusLights(
+      status: RaspiGateLightStatus.carDetected,
     );
   }
 
   Future<Uint8List?> _getImage() async {
+    await raspiGateControlClient.setStatusLights(
+      status: RaspiGateLightStatus.processing,
+    );
     return ref.read(capturedCameraImageProvider.notifier).captureNewImage();
   }
 
@@ -92,32 +84,37 @@ class AutoGateController extends _$AutoGateController {
   }
 
   Future<void> _denyEntry() async {
-    await _raspiGateControlClient.setStatusLights(
+    await raspiGateControlClient.setStatusLights(
       status: RaspiGateLightStatus.deny,
     );
   }
 
   Future<void> _allowEntry(String licensePlateText) async {
-    await _raspiGateControlClient.setStatusLights(
+    await raspiGateControlClient.setStatusLights(
       status: RaspiGateLightStatus.allow,
     );
 
-    await _raspiGateControlClient.setGateState(state: RaspiGateState.open);
+    await raspiGateControlClient.setGateState(state: RaspiGateState.open);
   }
 
   Future<void> _warnCloseGate() async {
-    await _raspiGateControlClient.makeSound(
+    await raspiGateControlClient.makeSound(
       frequency: 600,
       duration: 0.5,
     );
   }
 
   Future<void> _closeGate() async {
-    await _raspiGateControlClient.setGateState(state: RaspiGateState.close);
-    await _raspiGateControlClient.setScreenText(text: '');
+    await raspiGateControlClient.setGateState(state: RaspiGateState.close);
+    await raspiGateControlClient.setScreenText(text: '');
   }
 
-  Future<void> _startProccess() async {
+  Future<void> startProccess() async {
+    if (_isProcessing) {
+      _log('Đang bận xử lý, vui lòng chờ...');
+      return;
+    }
+
     try {
       await _begin();
       final image = await _getImage();
@@ -144,6 +141,9 @@ class AutoGateController extends _$AutoGateController {
             text: 'Bien so xe \n\n$displayLicensePlate',
           );
 
+      // Wait screen stablize
+      await Future.delayed(const Duration(milliseconds: 500));
+
       if (licensePlate == null) {
         _log('Không cho xe vào');
         await _denyEntry();
@@ -166,4 +166,37 @@ class AutoGateController extends _$AutoGateController {
       await _reset();
     }
   }
+}
+
+@riverpod
+AutoGateService autoGateService(AutoGateServiceRef ref) {
+  final raspiGateControlClient = ref.watch(raspiGateControlClientProvider);
+  final allowedLicensePlates = [
+    '51F17812',
+    '29A51796',
+    '43A18650',
+    '51H61687',
+    '89A07379',
+    '98A17339',
+    '30G40304',
+    '30A04180',
+    '29D07881',
+    '14A09290',
+  ];
+
+  final service = AutoGateService(
+    ref: ref,
+    allowedLicensePlates: allowedLicensePlates,
+    raspiGateControlClient: raspiGateControlClient,
+  );
+
+  ref.listen(raspiDistanceSensorValueStreamProvider, (previous, next) {
+    switch (next) {
+      // Auto capture image when distance sensor value is less than 10 cm
+      case AsyncData(:final value) when value <= 10 && !service.isProcessing:
+        service.startProccess();
+    }
+  });
+
+  return service;
 }

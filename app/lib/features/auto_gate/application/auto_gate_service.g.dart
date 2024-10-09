@@ -6,22 +6,20 @@ part of 'auto_gate_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$autoGateControllerHash() =>
-    r'941eb29a35cc8aa1587519dc03fa4fa28e4dfaeb';
+String _$autoGateServiceHash() => r'4aedb50dc54c8fd903592e3648de88b4683766db';
 
-/// See also [AutoGateController].
-@ProviderFor(AutoGateController)
-final autoGateControllerProvider = AutoDisposeNotifierProvider<
-    AutoGateController, AutoGateControllerState>.internal(
-  AutoGateController.new,
-  name: r'autoGateControllerProvider',
+/// See also [autoGateService].
+@ProviderFor(autoGateService)
+final autoGateServiceProvider = AutoDisposeProvider<AutoGateService>.internal(
+  autoGateService,
+  name: r'autoGateServiceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$autoGateControllerHash,
+      : _$autoGateServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AutoGateController = AutoDisposeNotifier<AutoGateControllerState>;
+typedef AutoGateServiceRef = AutoDisposeProviderRef<AutoGateService>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -11,7 +11,7 @@ class MyApp extends HookConsumerWidget {
   const MyApp({super.key});
 
   void _keepAppServicesAlive(WidgetRef ref) {
-    ref.listen(autoGateControllerProvider, (_, __) {});
+    ref.listen(autoGateServiceProvider, (_, __) {});
   }
 
   @override

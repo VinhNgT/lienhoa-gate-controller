@@ -4,7 +4,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'raspi_gate_control_client.g.dart';
 
-enum RaspiGateLightStatus { none, processing, allow, deny }
+enum RaspiGateLightStatus {
+  none('none'),
+  carDetected('car_detected'),
+  processing('processing'),
+  allow('allow'),
+  deny('deny');
+
+  const RaspiGateLightStatus(this.apiName);
+  final String apiName;
+}
 
 enum RaspiGateState { open, close }
 
@@ -18,7 +27,7 @@ class RaspiGateControlClient {
   }) async {
     final _ = await raspiDio.patch(
       '/status_lights_state/',
-      data: {'state': status.name},
+      data: {'state': status.apiName},
       cancelToken: cancelToken,
     );
   }
