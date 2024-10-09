@@ -56,7 +56,7 @@ linter:
     - use_super_parameters
     - use_enums
     - use_setters_to_change_properties
-    # - sort_constructors_first
+    - sort_constructors_first
     - sort_unnamed_constructors_first
     # - prefer_constructors_over_static_methods
 
