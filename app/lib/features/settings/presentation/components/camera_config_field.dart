@@ -8,13 +8,17 @@ import 'package:lienhoa_gate_controller/features/settings/domain/camera_settings
 import 'package:lienhoa_gate_controller/utils/list_extention.dart';
 
 class CameraConfigField extends HookConsumerWidget {
-  const CameraConfigField({super.key, required this.field});
+  const CameraConfigField({
+    super.key,
+    required this.field,
+    required this.initialSettings,
+  });
+
   final FormFieldState<CameraSettings> field;
+  final CameraSettings initialSettings;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = field.value!;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -25,9 +29,9 @@ class CameraConfigField extends HookConsumerWidget {
             hintText: 'Mặc định: ***REMOVED***:554/ch1/main',
             floatingLabelBehavior: FloatingLabelBehavior.always,
           ),
-          initialValue: settings.videoStreamAddress,
+          initialValue: initialSettings.videoStreamAddress,
           onChanged: (value) {
-            field.didChange(settings.copyWith(videoStreamAddress: value));
+            field.didChange(field.value!.copyWith(videoStreamAddress: value));
           },
         ),
         FormBuilderTextField(
@@ -37,9 +41,9 @@ class CameraConfigField extends HookConsumerWidget {
             hintText: 'Mặc định: admin',
             floatingLabelBehavior: FloatingLabelBehavior.always,
           ),
-          initialValue: settings.videoStreamUser,
+          initialValue: initialSettings.videoStreamUser,
           onChanged: (value) {
-            field.didChange(settings.copyWith(videoStreamUser: value));
+            field.didChange(field.value!.copyWith(videoStreamUser: value));
           },
         ),
         HookBuilder(
@@ -65,10 +69,12 @@ class CameraConfigField extends HookConsumerWidget {
                   ),
                 ),
               ),
-              initialValue: settings.videoStreamPassword,
+              initialValue: initialSettings.videoStreamPassword,
               obscureText: obscurePassword.value,
               onChanged: (value) {
-                field.didChange(settings.copyWith(videoStreamPassword: value));
+                field.didChange(
+                  field.value!.copyWith(videoStreamPassword: value),
+                );
               },
             );
           },
