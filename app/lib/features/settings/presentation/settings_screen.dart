@@ -84,6 +84,7 @@ class SettingsScreen extends HookConsumerWidget {
                 children: <Widget>[
                   FormBuilderField<CameraSettings>(
                     name: 'cameraSettings',
+                    initialValue: settings.cameraSettings,
                     builder: (FormFieldState<CameraSettings> field) =>
                         CameraConfigField(
                       field: field,
