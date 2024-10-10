@@ -1,0 +1,93 @@
+name: Build Windows release
+
+on:
+  push:
+    tags:
+      - "*-v*.*.*"
+
+jobs:
+  print-github-context:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GITHUB_VAR: ${{ toJson(github) }}
+        run: echo "$GITHUB_VAR"
+
+  get-variables:
+    runs-on: ubuntu-latest
+    outputs:
+      package_name: ${{ steps.get_tag_info.outputs.PACKAGE_NAME }}
+      version: ${{ steps.get_tag_info.outputs.VERSION }}
+      flutter_sdk_version: ${{ steps.get_sdk_version.outputs.SDK_VERSION }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get package name and version
+        id: get_tag_info
+        run: |
+          TAG=${{github.ref_name}}
+          PACKAGE_NAME=$(echo $TAG | awk -F '-v' '{print $1}')
+          VERSION=$(echo $TAG | awk -F '-v' '{print $2}')
+
+          if [ -z "$PACKAGE_NAME" ]; then
+            echo "::error::No package name found"
+            exit 1
+          fi
+
+          if [ -z "$VERSION" ]; then
+            echo "::error::No version found"
+            exit 1
+          fi
+
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get Flutter SDK version from fvm setting
+        id: get_sdk_version
+        run: |
+          SDK_VERSION=$(jq -r '.flutter' .fvmrc)
+
+          if [ -z "$SDK_VERSION" ]; then
+          echo "::error::No Flutter SDK version found in .fvmrc"
+          exit 1
+          fi
+
+          echo "SDK_VERSION=$SDK_VERSION" >> $GITHUB_OUTPUT
+
+  build-windows-release:
+    needs: get-variables
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_NAME: ${{ needs.get-variables.outputs.package_name }}
+      VERSION: ${{ needs.get-variables.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.VERSION }}
+
+      - name: Build Windows release
+        working-directory: app
+        run: |
+          flutter build windows
+
+      - name: Archive Windows release
+        working-directory: build/windows/x64/runner/Release
+        env:
+          FILE_NAME: $${{ env.PACKAGE_NAME }}-${{ env.VERSION }}-windows-x64.zip
+        run: |
+          7z a -tzip $FILE_NAME .
+          mv $FILE_NAME $GITHUB_WORKSPACE
+
+      - name: Upload Windows release
+        uses: softprops/action-gh-release@v2
+        env:
+          FILE_NAME: $${{ env.PACKAGE_NAME }}-${{ env.VERSION }}-windows-x64.zip
+        with:
+          files: |
+            ${{ env.FILE_NAME }}
