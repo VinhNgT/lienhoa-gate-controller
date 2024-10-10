@@ -6,7 +6,7 @@ part of 'alpr_client.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$alprClientHash() => r'bdd02c5536d7f7d74cf9902ba4b7152995485f86';
+String _$alprClientHash() => r'2c3776bd0c2d7e538273843256397869f650e806';
 
 /// See also [alprClient].
 @ProviderFor(alprClient)

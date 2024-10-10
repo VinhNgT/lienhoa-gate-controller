@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:lienhoa_gate_controller/features/settings/application/settings_providers.dart';
 import 'package:lienhoa_gate_controller/networking/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -79,7 +80,10 @@ class RaspiGateControlClient {
 
 @riverpod
 RaspiGateControlClient raspiGateControlClient(RaspiGateControlClientRef ref) {
-  final dio = ref.watch(dioProvider('http://raspberrypi'));
+  final raspiAddress =
+      ref.watch(settingsProvider.select((value) => value.raspiAddress));
+
+  final dio = ref.watch(dioProvider('http://$raspiAddress'));
   dio.options.contentType = Headers.formUrlEncodedContentType;
 
   return RaspiGateControlClient(raspiDio: dio);

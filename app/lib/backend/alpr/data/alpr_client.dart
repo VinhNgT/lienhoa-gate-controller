@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:lienhoa_gate_controller/backend/alpr/domain/alpr_response.dart';
+import 'package:lienhoa_gate_controller/features/settings/application/settings_providers.dart';
 import 'package:lienhoa_gate_controller/networking/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -36,6 +37,9 @@ class AlprClient {
 
 @riverpod
 AlprClient alprClient(AlprClientRef ref) {
-  final dio = ref.watch(dioProvider('http://localhost'));
+  final alprAddress =
+      ref.watch(settingsProvider.select((value) => value.alprAddress));
+
+  final dio = ref.watch(dioProvider('http://$alprAddress'));
   return AlprClient(alprDio: dio);
 }

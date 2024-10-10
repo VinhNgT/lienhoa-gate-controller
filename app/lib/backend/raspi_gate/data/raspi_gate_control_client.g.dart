@@ -7,7 +7,7 @@ part of 'raspi_gate_control_client.dart';
 // **************************************************************************
 
 String _$raspiGateControlClientHash() =>
-    r'04806913a34bd4f4caf4808540b7b30183a1d48c';
+    r'd4482c113d49b23d8b4919ca56588d3cb51536b3';
 
 /// See also [raspiGateControlClient].
 @ProviderFor(raspiGateControlClient)
