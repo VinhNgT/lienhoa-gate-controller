@@ -20,10 +20,11 @@ Settings _$SettingsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Settings {
-  String get raspiAddress => throw _privateConstructorUsedError;
-  String get alprAddress => throw _privateConstructorUsedError;
-  double get sensorDistanceThreshold => throw _privateConstructorUsedError;
-  List<String> get allowedLicensePlates => throw _privateConstructorUsedError;
+  String? get raspiAddress => throw _privateConstructorUsedError;
+  String? get alprAddress => throw _privateConstructorUsedError;
+  CameraSettings? get cameraSettings => throw _privateConstructorUsedError;
+  double? get sensorDistanceThreshold => throw _privateConstructorUsedError;
+  List<String>? get allowedLicensePlates => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,10 +38,13 @@ abstract class $SettingsCopyWith<$Res> {
       _$SettingsCopyWithImpl<$Res, Settings>;
   @useResult
   $Res call(
-      {String raspiAddress,
-      String alprAddress,
-      double sensorDistanceThreshold,
-      List<String> allowedLicensePlates});
+      {String? raspiAddress,
+      String? alprAddress,
+      CameraSettings? cameraSettings,
+      double? sensorDistanceThreshold,
+      List<String>? allowedLicensePlates});
+
+  $CameraSettingsCopyWith<$Res>? get cameraSettings;
 }
 
 /// @nodoc
@@ -56,29 +60,46 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? raspiAddress = null,
-    Object? alprAddress = null,
-    Object? sensorDistanceThreshold = null,
-    Object? allowedLicensePlates = null,
+    Object? raspiAddress = freezed,
+    Object? alprAddress = freezed,
+    Object? cameraSettings = freezed,
+    Object? sensorDistanceThreshold = freezed,
+    Object? allowedLicensePlates = freezed,
   }) {
     return _then(_value.copyWith(
-      raspiAddress: null == raspiAddress
+      raspiAddress: freezed == raspiAddress
           ? _value.raspiAddress
           : raspiAddress // ignore: cast_nullable_to_non_nullable
-              as String,
-      alprAddress: null == alprAddress
+              as String?,
+      alprAddress: freezed == alprAddress
           ? _value.alprAddress
           : alprAddress // ignore: cast_nullable_to_non_nullable
-              as String,
-      sensorDistanceThreshold: null == sensorDistanceThreshold
+              as String?,
+      cameraSettings: freezed == cameraSettings
+          ? _value.cameraSettings
+          : cameraSettings // ignore: cast_nullable_to_non_nullable
+              as CameraSettings?,
+      sensorDistanceThreshold: freezed == sensorDistanceThreshold
           ? _value.sensorDistanceThreshold
           : sensorDistanceThreshold // ignore: cast_nullable_to_non_nullable
-              as double,
-      allowedLicensePlates: null == allowedLicensePlates
+              as double?,
+      allowedLicensePlates: freezed == allowedLicensePlates
           ? _value.allowedLicensePlates
           : allowedLicensePlates // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CameraSettingsCopyWith<$Res>? get cameraSettings {
+    if (_value.cameraSettings == null) {
+      return null;
+    }
+
+    return $CameraSettingsCopyWith<$Res>(_value.cameraSettings!, (value) {
+      return _then(_value.copyWith(cameraSettings: value) as $Val);
+    });
   }
 }
 
@@ -91,10 +112,14 @@ abstract class _$$SettingsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String raspiAddress,
-      String alprAddress,
-      double sensorDistanceThreshold,
-      List<String> allowedLicensePlates});
+      {String? raspiAddress,
+      String? alprAddress,
+      CameraSettings? cameraSettings,
+      double? sensorDistanceThreshold,
+      List<String>? allowedLicensePlates});
+
+  @override
+  $CameraSettingsCopyWith<$Res>? get cameraSettings;
 }
 
 /// @nodoc
@@ -108,28 +133,33 @@ class __$$SettingsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? raspiAddress = null,
-    Object? alprAddress = null,
-    Object? sensorDistanceThreshold = null,
-    Object? allowedLicensePlates = null,
+    Object? raspiAddress = freezed,
+    Object? alprAddress = freezed,
+    Object? cameraSettings = freezed,
+    Object? sensorDistanceThreshold = freezed,
+    Object? allowedLicensePlates = freezed,
   }) {
     return _then(_$SettingsImpl(
-      raspiAddress: null == raspiAddress
+      raspiAddress: freezed == raspiAddress
           ? _value.raspiAddress
           : raspiAddress // ignore: cast_nullable_to_non_nullable
-              as String,
-      alprAddress: null == alprAddress
+              as String?,
+      alprAddress: freezed == alprAddress
           ? _value.alprAddress
           : alprAddress // ignore: cast_nullable_to_non_nullable
-              as String,
-      sensorDistanceThreshold: null == sensorDistanceThreshold
+              as String?,
+      cameraSettings: freezed == cameraSettings
+          ? _value.cameraSettings
+          : cameraSettings // ignore: cast_nullable_to_non_nullable
+              as CameraSettings?,
+      sensorDistanceThreshold: freezed == sensorDistanceThreshold
           ? _value.sensorDistanceThreshold
           : sensorDistanceThreshold // ignore: cast_nullable_to_non_nullable
-              as double,
-      allowedLicensePlates: null == allowedLicensePlates
+              as double?,
+      allowedLicensePlates: freezed == allowedLicensePlates
           ? _value._allowedLicensePlates
           : allowedLicensePlates // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
     ));
   }
 }
@@ -138,33 +168,38 @@ class __$$SettingsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
   const _$SettingsImpl(
-      {required this.raspiAddress,
-      required this.alprAddress,
-      required this.sensorDistanceThreshold,
-      required final List<String> allowedLicensePlates})
+      {this.raspiAddress,
+      this.alprAddress,
+      this.cameraSettings,
+      this.sensorDistanceThreshold,
+      final List<String>? allowedLicensePlates})
       : _allowedLicensePlates = allowedLicensePlates;
 
   factory _$SettingsImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsImplFromJson(json);
 
   @override
-  final String raspiAddress;
+  final String? raspiAddress;
   @override
-  final String alprAddress;
+  final String? alprAddress;
   @override
-  final double sensorDistanceThreshold;
-  final List<String> _allowedLicensePlates;
+  final CameraSettings? cameraSettings;
   @override
-  List<String> get allowedLicensePlates {
+  final double? sensorDistanceThreshold;
+  final List<String>? _allowedLicensePlates;
+  @override
+  List<String>? get allowedLicensePlates {
+    final value = _allowedLicensePlates;
+    if (value == null) return null;
     if (_allowedLicensePlates is EqualUnmodifiableListView)
       return _allowedLicensePlates;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_allowedLicensePlates);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Settings(raspiAddress: $raspiAddress, alprAddress: $alprAddress, sensorDistanceThreshold: $sensorDistanceThreshold, allowedLicensePlates: $allowedLicensePlates)';
+    return 'Settings(raspiAddress: $raspiAddress, alprAddress: $alprAddress, cameraSettings: $cameraSettings, sensorDistanceThreshold: $sensorDistanceThreshold, allowedLicensePlates: $allowedLicensePlates)';
   }
 
   @override
@@ -174,6 +209,7 @@ class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
       ..add(DiagnosticsProperty('type', 'Settings'))
       ..add(DiagnosticsProperty('raspiAddress', raspiAddress))
       ..add(DiagnosticsProperty('alprAddress', alprAddress))
+      ..add(DiagnosticsProperty('cameraSettings', cameraSettings))
       ..add(DiagnosticsProperty(
           'sensorDistanceThreshold', sensorDistanceThreshold))
       ..add(DiagnosticsProperty('allowedLicensePlates', allowedLicensePlates));
@@ -188,6 +224,8 @@ class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
                 other.raspiAddress == raspiAddress) &&
             (identical(other.alprAddress, alprAddress) ||
                 other.alprAddress == alprAddress) &&
+            (identical(other.cameraSettings, cameraSettings) ||
+                other.cameraSettings == cameraSettings) &&
             (identical(
                     other.sensorDistanceThreshold, sensorDistanceThreshold) ||
                 other.sensorDistanceThreshold == sensorDistanceThreshold) &&
@@ -201,6 +239,7 @@ class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
       runtimeType,
       raspiAddress,
       alprAddress,
+      cameraSettings,
       sensorDistanceThreshold,
       const DeepCollectionEquality().hash(_allowedLicensePlates));
 
@@ -220,22 +259,25 @@ class _$SettingsImpl with DiagnosticableTreeMixin implements _Settings {
 
 abstract class _Settings implements Settings {
   const factory _Settings(
-      {required final String raspiAddress,
-      required final String alprAddress,
-      required final double sensorDistanceThreshold,
-      required final List<String> allowedLicensePlates}) = _$SettingsImpl;
+      {final String? raspiAddress,
+      final String? alprAddress,
+      final CameraSettings? cameraSettings,
+      final double? sensorDistanceThreshold,
+      final List<String>? allowedLicensePlates}) = _$SettingsImpl;
 
   factory _Settings.fromJson(Map<String, dynamic> json) =
       _$SettingsImpl.fromJson;
 
   @override
-  String get raspiAddress;
+  String? get raspiAddress;
   @override
-  String get alprAddress;
+  String? get alprAddress;
   @override
-  double get sensorDistanceThreshold;
+  CameraSettings? get cameraSettings;
   @override
-  List<String> get allowedLicensePlates;
+  double? get sensorDistanceThreshold;
+  @override
+  List<String>? get allowedLicensePlates;
   @override
   @JsonKey(ignore: true)
   _$$SettingsImplCopyWith<_$SettingsImpl> get copyWith =>

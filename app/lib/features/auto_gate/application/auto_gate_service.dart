@@ -177,7 +177,7 @@ AutoGateService autoGateService(AutoGateServiceRef ref) {
 
   final service = AutoGateService(
     ref: ref,
-    allowedLicensePlates: allowedLicensePlates,
+    allowedLicensePlates: allowedLicensePlates!,
     raspiGateControlClient: raspiGateControlClient,
   );
 
@@ -188,7 +188,7 @@ AutoGateService autoGateService(AutoGateServiceRef ref) {
     switch (next) {
       // Auto capture image when distance sensor value is less than 10 cm
       case AsyncData(:final value)
-          when value <= sensorDistanceThreshold && !service.isProcessing:
+          when value <= sensorDistanceThreshold! && !service.isProcessing:
         service.startProccess();
     }
   });

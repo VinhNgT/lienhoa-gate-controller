@@ -1,3 +1,4 @@
+import 'package:lienhoa_gate_controller/features/settings/application/settings_providers.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -42,15 +43,24 @@ class CameraClient {
 
 @riverpod
 CameraClient cameraClient(CameraClientRef ref) {
-  const videoStreamUser = 'admin';
-  const videoStreamPassword = 'Default0';
-  const videoStreamUrl = '192.168.11.180:554/ch1/main';
+  final videoStreamUrl = ref.watch(
+    settingsProvider
+        .select((value) => value.cameraSettings!.videoStreamAddress!),
+  );
+  final videoStreamUser = ref.watch(
+    settingsProvider.select((value) => value.cameraSettings!.videoStreamUser!),
+  );
+  final videoStreamPassword = ref.watch(
+    settingsProvider
+        .select((value) => value.cameraSettings!.videoStreamPassword!),
+  );
+
   const mvpConfig = {
     'profile': 'low-latency',
     'initial-audio-sync': 'no',
   };
 
-  return const CameraClient(
+  return CameraClient(
     videoStreamUser: videoStreamUser,
     videoStreamPassword: videoStreamPassword,
     videoStreamUrl: videoStreamUrl,

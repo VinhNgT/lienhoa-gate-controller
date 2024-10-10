@@ -81,7 +81,7 @@ class SettingsScreen extends HookConsumerWidget {
               child: Column(
                 children: <Widget>[
                   FormBuilderTextField(
-                    name: SettingsRepository.raspiAddressKey,
+                    name: 'raspiAddress',
                     decoration: const InputDecoration(
                       labelText: 'Địa chỉ Raspberry Pi',
                       hintText: 'Mặc định: raspberrypi',
@@ -90,7 +90,7 @@ class SettingsScreen extends HookConsumerWidget {
                     initialValue: settings.raspiAddress,
                   ),
                   FormBuilderTextField(
-                    name: SettingsRepository.alprAddressKey,
+                    name: 'alprAddress',
                     decoration: const InputDecoration(
                       labelText: 'Địa chỉ ALPR',
                       hintText: 'Mặc định: localhost',
@@ -99,10 +99,10 @@ class SettingsScreen extends HookConsumerWidget {
                     initialValue: settings.alprAddress,
                   ),
                   FormBuilderSlider(
-                    name: SettingsRepository.sensorDistanceThresholdKey,
+                    name: 'sensorDistanceThreshold',
                     min: 2,
                     max: 20,
-                    initialValue: settings.sensorDistanceThreshold,
+                    initialValue: settings.sensorDistanceThreshold!,
                     numberFormat:
                         NumberFormat.decimalPatternDigits(decimalDigits: 1),
                     valueTransformer: (value) =>
@@ -115,7 +115,7 @@ class SettingsScreen extends HookConsumerWidget {
                     ),
                   ),
                   FormBuilderField(
-                    name: SettingsRepository.allowedLicensePlatesKey,
+                    name: 'allowedLicensePlates',
                     initialValue: settings.allowedLicensePlates,
                     builder: (FormFieldState<List<String>> field) =>
                         AllowedLicensePlatesField(field: field),
