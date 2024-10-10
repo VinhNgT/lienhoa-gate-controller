@@ -6,11 +6,7 @@ import 'package:lienhoa_gate_controller/constants/app_sizes.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AllowedLicensePlatesField extends HookConsumerWidget {
-  const AllowedLicensePlatesField({
-    super.key,
-    required this.field,
-  });
-
+  const AllowedLicensePlatesField({super.key, required this.field});
   final FormFieldState<List<String>> field;
 
   @override
