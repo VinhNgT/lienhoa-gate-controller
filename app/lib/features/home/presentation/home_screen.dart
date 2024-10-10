@@ -51,7 +51,7 @@ class CapturedImageView extends HookConsumerWidget {
             color: Colors.grey,
             child: Center(
               child: Text(
-                'No image captured',
+                'Chưa xử lý ảnh',
                 style: context.textTheme.titleMedium,
               ),
             ),
