@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get package name and version
+      - name: Get package name and version from tag
         id: get_tag_info
         run: |
           TAG=${{github.ref_name}}
@@ -57,37 +57,60 @@ jobs:
 
   build-windows-release:
     needs: get-variables
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
+    permissions:
+      contents: write
+
+    defaults:
+      run:
+        # Use Cygwin bash as the shell
+        shell: C:\cygwin\bin\bash.exe --login -eo pipefail '{0}'
+
     env:
+      SDK_VERSION: ${{ needs.get-variables.outputs.flutter_sdk_version }}
       PACKAGE_NAME: ${{ needs.get-variables.outputs.package_name }}
       VERSION: ${{ needs.get-variables.outputs.version }}
 
+      # Required for Cygwin to work properly
+      CHERE_INVOKING: 1
+      SHELLOPTS: igncr
+      CYGWIN: winsymlinks:native
+
     steps:
+      - name: Install Cygwin
+        uses: cygwin/cygwin-install-action@v4
+        with:
+          packages: jq
+
       - uses: actions/checkout@v4
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: VinhNgT/flutter-action@v2
         with:
           channel: stable
-          flutter-version: ${{ env.VERSION }}
+          flutter-version: ${{ env.SDK_VERSION }}
 
       - name: Build Windows release
-        working-directory: app
         run: |
-          flutter build windows
+          bash scripts/build_flutter_windows.sh
 
       - name: Archive Windows release
-        working-directory: build/windows/x64/runner/Release
+        working-directory: app/build/windows/x64/runner/Release
         env:
-          FILE_NAME: $${{ env.PACKAGE_NAME }}-${{ env.VERSION }}-windows-x64.zip
+          FILE_NAME: ${{ env.PACKAGE_NAME }}-${{ env.VERSION }}-windows-x64.zip
         run: |
-          7z a -tzip $FILE_NAME .
+          7z a -tzip -mx=9 $FILE_NAME .
           mv $FILE_NAME $GITHUB_WORKSPACE
 
       - name: Upload Windows release
         uses: softprops/action-gh-release@v2
         env:
-          FILE_NAME: $${{ env.PACKAGE_NAME }}-${{ env.VERSION }}-windows-x64.zip
+          FILE_NAME: ${{ env.PACKAGE_NAME }}-${{ env.VERSION }}-windows-x64.zip
         with:
           files: |
             ${{ env.FILE_NAME }}
+
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+          prerelease: ${{ contains(env.VERSION, '-dev.') }}
+          make_latest: ${{ !contains(env.VERSION, '-dev.') }}
