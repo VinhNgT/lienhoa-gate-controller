@@ -11,6 +11,7 @@ Player cameraPlayer(CameraPlayerRef ref) {
   final client = ref.watch(cameraClientProvider);
 
   final player = client.buildPlayer();
+  player.play();
   ref.onDispose(player.dispose);
 
   return player;

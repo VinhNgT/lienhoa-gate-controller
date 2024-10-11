@@ -8,10 +8,10 @@ class CameraView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cameraVideoController = ref.watch(cameraPlayerProvider);
+    final player = ref.watch(cameraPlayerProvider);
 
     return Video(
-      controller: VideoController(cameraVideoController),
+      controller: VideoController(player),
       controls: NoVideoControls,
     );
   }

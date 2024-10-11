@@ -35,6 +35,7 @@ class CameraClient {
 
     player.open(
       Media('rtsp://$videoStreamUser:$videoStreamPassword@$videoStreamUrl'),
+      play: false,
     );
 
     return player;
