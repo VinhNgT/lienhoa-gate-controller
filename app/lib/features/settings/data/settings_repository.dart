@@ -24,7 +24,7 @@ class SettingsRepository {
     raspiAddress: 'raspberrypi',
     alprAddress: 'localhost',
     cameraSettings: CameraSettings(
-      videoStreamAddress: '***REMOVED***:554/ch1/main',
+      videoStreamAddress: 'cameraip:554/ch1/main',
       videoStreamUser: 'admin',
       videoStreamPassword: 'Default0',
     ),

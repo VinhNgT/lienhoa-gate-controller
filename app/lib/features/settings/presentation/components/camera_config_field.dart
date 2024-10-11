@@ -26,7 +26,7 @@ class CameraConfigField extends HookConsumerWidget {
           name: 'videoStreamAddress',
           decoration: const InputDecoration(
             labelText: 'Địa chỉ camera',
-            hintText: 'Mặc định: ***REMOVED***:554/ch1/main',
+            hintText: 'Mặc định: cameraip:554/ch1/main',
             floatingLabelBehavior: FloatingLabelBehavior.always,
           ),
           initialValue: initialSettings.videoStreamAddress,
