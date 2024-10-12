@@ -13,3 +13,6 @@ BUILD_NUM=$(jq -r '.build_number' .appversion)
 
 # Build the app
 (cd app && exec flutter build windows --build-name $VERSION --build-number $BUILD_NUM)
+
+# Create symlink to the release folder
+ln -s -f app/build/windows/x64/runner/Release/ build_result
